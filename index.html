@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GWA Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            padding: 30px;
+            padding-bottom: 60px;
+            margin: 0;
+        }
+
+        /* Fullscreen blur background */
+        .blur-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://t4.ftcdn.net/jpg/08/05/33/93/360_F_805339306_Q91j356gHby8Expe3exfBo9ABGU2Rdst.jpg'); /* Replace with your own image */
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px);
+            z-index: -1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+            font-size: 50px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9); /* semi-transparent white */
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: block;
+        }
+
+        .subject {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 12px;
+        }
+
+        .subject input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            margin: 0 0px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            font-size: 0.8rem;
+        }
+
+        .subject input[type="number"] {
+            flex: 1;
+            min-width: 80px;
+            padding: 5px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .subject button {
+            padding: 8px 128px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: auto;
+        }
+
+        .subject button:hover {
+            background-color: #c82333;
+        }
+
+        .add {
+            padding: 12px 28px;
+            background-color: #4089B9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-left: 3px;
+            transition: background-color 0.3s ease;
+        }
+
+        .com {
+            padding: 12px 28px;
+            background-color: #19873e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-left: 3px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px; /* Add some space below the result */
+            margin-bottom: 20px; /* Add some space below the result */
+            text-align: center;
+            font-size: 2em;
+            color: #252121;
+            font-weight: bolder;
+            display: none; /* Initially hidden */
+        }
+
+        .loading {
+            margin-top: 20px; /* Add some space below the result */
+            display: none; /* Hidden by default */
+            text-align: center;
+            font-size: 1.5em;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .software-footer {
+            background-color: #f3f3f3;
+            border-top: 1px solid #cccccc;
+            color: #333333;
+            font-size: 12px;
+            padding: 5px 10px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .subjects-table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            display: none; /* Initially hidden */
+        }
+
+        .subjects-table th, .subjects-table td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .subjects-table th {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Blur -->
+    <div class="blur-background"></div>
+    
+    <h1>GWA Calculator</h1>
+    <div class="container">
+        <div id="subjects">
+            <div class="subject">
+                <input type="text" class="subject-name" value="Subject 1">
+                <input type="number" class="grade" placeholder="Grade" min="0" step="0.01">
+                <input type="number" class="units" placeholder="Units" min="0" step="0.01">
+                <button class="delete-subject">Delete</button>
+            </div>
+        </div>
+        <button class="add" id="addSubject">Add Subject</button>
+        <button class="com" id="computeGWA">Compute GWA</button>
+
+        <div class="result" id="result"></div> <!-- Move the result here above the table -->
+        <div class="loading" id="loading">Calculating...</div> <!-- Loading indicator -->
+
+        <!-- Table to display subjects and grades -->
+        <table class="subjects-table" id="subjects-table">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Grade</th>
+                    <th>Units</th>
+                </tr>
+            </thead>
+            <tbody id="subjects-body"></tbody>
+        </table>
+    </div>
+
+    <div class="software-footer">
+        <div>Copyright © 2024 VanHeylen. All Rights Reserved</div>
+    </div>
+
+    <script>
+        let subjectCount = 1;
+
+        document.getElementById('addSubject').addEventListener('click', () => {
+            subjectCount++;
+            const subjectsDiv = document.getElementById('subjects');
+            const newSubject = document.createElement('div');
+            newSubject.className = 'subject';
+            newSubject.innerHTML = ` 
+                <input type="text" class="subject-name" value="Subject ${subjectCount}">
+                <input type="number" class="grade" placeholder="Grade" min="0" step="0.01">
+                <input type="number" class="units" placeholder="Units" min="0" step="0.01">
+                <button class="delete-subject">Delete</button>
+            `;
+            subjectsDiv.appendChild(newSubject);
+
+            // Add event listener to the delete button
+            const deleteButton = newSubject.querySelector('.delete-subject');
+            deleteButton.addEventListener('click', () => {
+                if (subjectsDiv.children.length > 1) {
+                    subjectsDiv.removeChild(newSubject);
+                }
+            });
+        });
+
+        document.getElementById('computeGWA').addEventListener('click', () => {
+            const loadingElement = document.getElementById('loading');
+            const resultElement = document.getElementById('result');
+            const subjectsTable = document.getElementById('subjects-table');
+            const subjectsBody = document.getElementById('subjects-body');
+
+            // Show loading spinner
+            loadingElement.style.display = 'block';
+            resultElement.style.display = 'none'; // Hide the result initially
+            subjectsTable.style.display = 'none'; // Hide the table initially
+            subjectsBody.innerHTML = ''; // Clear previous table entries
+
+            setTimeout(() => {
+                const grades = document.querySelectorAll('.grade');
+                const units = document.querySelectorAll('.units');
+                const subjectNames = document.querySelectorAll('.subject-name');
+                let totalWeightedGrade = 0;
+                let totalUnits = 0;
+
+                grades.forEach((gradeInput, index) => {
+                    const grade = parseFloat(gradeInput.value) || 0;
+                    const unit = parseFloat(units[index].value) || 0;
+                    const subjectName = subjectNames[index].value || `Subject ${index + 1}`;
+                    
+                    // Append subject details to the table
+                    const row = document.createElement('tr');
+                    row.innerHTML = ` 
+                        <td>${subjectName}</td>
+                        <td>${grade}</td>
+                        <td>${unit}</td>
+                    `;
+                    subjectsBody.appendChild(row);
+
+                    totalWeightedGrade += grade * unit;
+                    totalUnits += unit;
+                });
+
+                const gwa = totalUnits > 0 ? (totalWeightedGrade / totalUnits).toFixed(2) : '0';
+                resultElement.textContent = `Your GWA is: ${gwa}`;
+
+                // Hide loading spinner and show result
+                loadingElement.style.display = 'none';
+                resultElement.style.display = 'block';
+
+                // Show the table after computation
+                subjectsTable.style.display = 'table';
+            }, 1000); // Simulate a delay for the calculation (1 second)
+        });
+
+        // Prevent deletion of the first subject
+        document.querySelectorAll('.delete-subject').forEach((button, index) => {
+            if (index === 0) {
+                button.disabled = true;  // Disable the delete button for "Subject 1"
+            } else {
+                button.addEventListener('click', (e) => {
+                    const subjectsDiv = document.getElementById('subjects');
+                    if (subjectsDiv.children.length > 1) {
+                        e.target.parentElement.remove();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
