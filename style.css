@@ -1,0 +1,245 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e9ecef;
+    padding: 30px;
+    padding-bottom: 60px;
+    margin: 0;
+}
+
+h1 {
+    text-align: left;
+    color: #343a40;
+    font-size: 40px;
+    margin-left: 20px;
+    margin-bottom: -2px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.9); /* semi-transparent white */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: block;
+}
+
+.subject {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 12px;
+}
+
+.subject input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    margin: 0 0px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    font-size: 0.8rem;
+}
+
+.subject input[type="number"] {
+    flex: 1;
+    min-width: 80px;
+    padding: 5px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
+}
+
+.subject button {
+    padding: 8px 128px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: auto;
+}
+
+.subject button:hover {
+    background-color: #c82333;
+}
+
+.add {
+    padding: 12px 28px;
+    background-color: #4089B9;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-left: 3px;
+    transition: background-color 0.3s ease;
+}
+
+.com {
+    padding: 12px 28px;
+    background-color: #19873e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-left: 3px;
+    transition: background-color 0.3s ease;
+}
+
+.reset {
+    padding: 12px 28px;
+    background-color: #db1111;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-left: 3px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.result {
+    margin-top: 20px; /* Add some space below the result */
+    margin-bottom: 20px; /* Add some space below the result */
+    text-align: center;
+    font-size: 2em;
+    color: #252121;
+    font-weight: bolder;
+    display: none; /* Initially hidden */
+}
+
+.loading {
+    margin-top: 20px; /* Add some space below the result */
+    display: none; /* Hidden by default */
+    text-align: center;
+    font-size: 1.5em;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.software-footer {
+    background-color: #f3f3f3;
+    border-top: 1px solid #cccccc;
+    color: #333333;
+    font-size: 12px;
+    padding: 5px 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+}
+
+.subjects-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    display: none; /* Initially hidden */
+}
+
+.subjects-table th, .subjects-table td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.subjects-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.intro {
+    padding: 15px;
+    margin: 0 auto;
+    max-width: 900px; /* Set a maximum width to avoid large margins on big screens */
+    text-align: justify;
+    font-size: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .intro {
+        font-size: 16px;
+        padding: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .intro {
+        font-size: 14px;
+        padding: 5px;
+    }
+}
+
+hr{
+    margin-bottom: 30px;
+    margin-top: -5px;
+}
+
+/* Print-friendly text-only styles */
+@media print {
+    body {
+        font-family: Arial, sans-serif;
+        color: black;
+        background: none;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 22px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .container, .intro {
+        margin: 0;
+        padding: 0;
+    }
+
+    .intro p {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    #subjects-table {
+        width: 100%;
+    }
+
+    th, td {
+        padding: 5px;
+        text-align: left;
+    }
+
+    th {
+        font-weight: bold;
+    }
+
+    button, .loading, #result, .software-footer {
+        display: none;
+    }
+
+    input, .subject {
+        display: none;
+    }
+
+    @page {
+        margin: 15mm;
+    }
+}
+
+
